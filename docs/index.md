@@ -1,4 +1,4 @@
-# PROJECT NAME HERE
+# Platinum Tracker
 
 by YOUR NAME HERE
 
