@@ -1,6 +1,6 @@
-# PROJECT NAME HERE
+# Plattinum Tracker
 
-by YOUR NAME HERE
+by Corban Mooney
 
 
 ---
@@ -20,7 +20,7 @@ Replace this text with your project description and list the key features below
 
 ## Project Links
 
-- [GitHub repo for the project](https://...)
+- [GitHub repo for the project](https://github.com/waimea-cjmooney/300-achievements)
 - [Project Documentation](https://waimea-cjmooney.github.io/300-achievements/)
 - [Live web app](https://...)
 
