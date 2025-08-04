@@ -19,7 +19,7 @@ Replace this text with a brief statement about the system that you intend to cre
 
 # Relevant Implications
 
-## NAME OF IMPLICATION 1
+## Functionality
 
 Replace this text with a clear explanation of what the implication means.
 
@@ -33,7 +33,7 @@ Replace this text with an explanation of what you will need to consider moving f
 
 
 
-## NAME OF IMPLICATION 2
+## Usability
 
 Replace this text with a clear explanation of what the implication means.
 
@@ -47,7 +47,7 @@ Replace this text with an explanation of what you will need to consider moving f
 
 
 
-## NAME OF IMPLICATION 3
+## Aesthetics
 
 Replace this text with a clear explanation of what the implication means.
 
