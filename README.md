@@ -1,4 +1,4 @@
-# Plattinum Tracker
+# Platinum Tracker
 
 by Corban Mooney
 
@@ -9,10 +9,10 @@ by Corban Mooney
 
 Replace this text with your project description and list the key features below
 
-- Feature 1 here
-- Feature 2 here
-- Feature 3 here
-- Feature 4 here
+- Account creation / sign in
+- Posting games / achievements
+- Completeing achievements
+- Saving achievement progress to account
 - Feature 5 here
 
 
