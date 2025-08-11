@@ -57,7 +57,7 @@ def show_all_things():
                    users.name AS owner
 
             FROM things
-            JOIN users ON things.user_id = users.id
+            JOIN users ON things.username = users.username
 
             ORDER BY things.name ASC
         """
@@ -80,11 +80,11 @@ def show_one_thing(id):
             SELECT things.id,
                    things.name,
                    things.price,
-                   things.user_id,
+                   things.username,
                    users.name AS owner
 
             FROM things
-            JOIN users ON things.user_id = users.id
+            JOIN users ON things.username = users.username
 
             WHERE things.id=?
         """
@@ -116,13 +116,13 @@ def add_a_thing():
     # Sanitise the text inputs
     name = html.escape(name)
 
-    # Get the user id from the session
-    user_id = session["user_id"]
+    # Get the username from the session
+    username = session["username"]
 
     with connect_db() as client:
         # Add the thing to the DB
-        sql = "INSERT INTO things (name, price, user_id) VALUES (?, ?, ?)"
-        params = [name, price, user_id]
+        sql = "INSERT INTO things (name, price, username) VALUES (?, ?, ?)"
+        params = [name, price, username]
         client.execute(sql, params)
 
         # Go back to the home page
@@ -138,12 +138,12 @@ def add_a_thing():
 @login_required
 def delete_a_thing(id):
     # Get the user id from the session
-    user_id = session["user_id"]
+    username = session["username"]
 
     with connect_db() as client:
         # Delete the thing from the DB only if we own it
-        sql = "DELETE FROM things WHERE id=? AND user_id=?"
-        params = [id, user_id]
+        sql = "DELETE FROM things WHERE id=? AND username=?"
+        params = [id, username]
         client.execute(sql, params)
 
         # Go back to the home page
@@ -234,7 +234,6 @@ def login_user():
             # Hash matches?
             if check_password_hash(hash, password):
                 # Yes, so save info in the session
-                session["user_id"]   = user["id"]
                 session["user_name"] = user["name"]
                 session["logged_in"] = True
 
@@ -253,7 +252,6 @@ def login_user():
 @app.get("/logout")
 def logout():
     # Clear the details from the session
-    session.pop("user_id", None)
     session.pop("user_name", None)
     session.pop("logged_in", None)
 
