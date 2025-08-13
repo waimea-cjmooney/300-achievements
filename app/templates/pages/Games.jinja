@@ -1,0 +1,47 @@
+{#=====================================================
+  Things page
+  - List of things passed in as 'things' array
+  - Form for adding a new thing
+=====================================================#}
+
+{% extends 'pages/base.jinja' %}
+
+
+{% block title %}
+
+    Flask Demo - All Things
+
+{% endblock %}
+
+
+{% block content %}
+
+    <h2>Newest Games</h2>
+
+
+    <article>
+
+        <ul>
+            {% for game in Games %}
+
+                <li>
+                    <a href="/thing/{{ thing.id }}">
+                        <strong>{{ game.name }}</strong> - owned by {{ game.username }}
+                    </a>
+                </li>
+
+            {% else %}
+
+                <p>None!</p>
+
+            {% endfor %}
+        </ul>
+
+    </article>
+
+
+
+    
+
+{% endblock %}
+
