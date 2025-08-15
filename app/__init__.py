@@ -97,16 +97,13 @@ def show_one_thing(id):
     with connect_db() as client:
         # Get the thing details from the DB, including the owner info
         sql = """
-            SELECT things.id,
-                   things.name,
-                   things.price,
-                   things.username,
-                   users.name AS owner
+            SELECT id,
+                   name,
+                   added_by
 
-            FROM things
-            JOIN users ON things.username = users.username
+            FROM games
 
-            WHERE things.id=?
+            WHERE id=?
         """
         params = [id]
         result = client.execute(sql, params)
@@ -114,8 +111,8 @@ def show_one_thing(id):
         # Did we get a result?
         if result.rows:
             # yes, so show it on the page
-            thing = result.rows[0]
-            return render_template("pages/thing.jinja", thing=thing)
+            game = result.rows[0]
+            return render_template("pages/thing.jinja", game=game)
 
         else:
             # No, so show error

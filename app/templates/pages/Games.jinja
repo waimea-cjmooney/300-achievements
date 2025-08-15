@@ -22,17 +22,17 @@
     <article>
 
         <ul>
-            {% for game in Games %}
+            {% for game in games %}
 
                 <li>
-                    <a href="/thing/{{ thing.id }}">
-                        <strong>{{ game.name }}</strong> - owned by {{ game.username }}
+                    <a href="/thing/{{ game.id }}">
+                        <strong>{{ game.name }}</strong> {{ game.added_by }}
                     </a>
                 </li>
 
             {% else %}
 
-                <p>None!</p>
+                <p>No games registered yet</p>
 
             {% endfor %}
         </ul>
