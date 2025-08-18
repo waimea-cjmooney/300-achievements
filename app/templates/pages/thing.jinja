@@ -9,12 +9,14 @@
 
 {% block title %}
 
-    Flask Demo - Single Thing
+    {{ game.name }} - Platinum Tracker
 
 {% endblock %}
 
 
 {% block content %}
+
+    <a role="button" href="/">Home</a>
 
     <article>
 
@@ -25,9 +27,9 @@
         <footer>
 
             {# Only show delete link if logged in AND owner #}
-            {% if session.user_id and (game.added_by == session.username) %}
+            {% if session.username and (game.added_by == session.username) %}
 
-                <a href="/delete/{{ game.id }}" onclick="return confirm('Really delete?');">Delete</a>
+                <a role="button" href="/delete/{{ game.id }}" onclick="return confirm('Really delete?');">Delete</a>
 
             {% else %}
 
@@ -39,8 +41,6 @@
 
     </article>
 
-
-    <a role="button" href="/things">Back to Thing List</a>
 
 {% endblock %}
 
