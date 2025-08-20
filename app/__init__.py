@@ -92,8 +92,8 @@ def show_all_things():
 #-----------------------------------------------------------
 # Thing page route - Show details of a single thing
 #-----------------------------------------------------------
-@app.get("/thing/<int:id>")
-def show_one_thing(id):
+@app.get("/game/<int:id>")
+def show_game(id):
     with connect_db() as client:
         # Get the thing details from the DB, including the owner info
         sql = """
@@ -107,16 +107,22 @@ def show_one_thing(id):
         """
         params = [id]
         result = client.execute(sql, params)
+        game = result.rows[0]
 
-        # Did we get a result?
-        if result.rows:
-            # yes, so show it on the page
-            game = result.rows[0]
-            return render_template("pages/thing.jinja", game=game)
+        sql = """
+            SELECT id,
+                   name,
+                   game_id,
+                   added_by
 
-        else:
-            # No, so show error
-            return not_found_error()
+            FROM achievements
+
+            WHERE game_id=?
+        """
+        params = [id]
+        result = client.execute(sql, params)
+        achievements = result.rows
+        return render_template("pages/game.jinja", game=game, achievements=achievements)
 
 
 #-----------------------------------------------------------

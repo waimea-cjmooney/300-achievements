@@ -24,6 +24,14 @@
             <h3>{{ game.name }}</h3>
         </header>
 
+        {% for achievement in achievements %}
+            <p>
+                <strong>{{ achievement.name }}</strong> <a href="">☐</a>
+            </p>
+        {% else %}
+            <p>No achievements registered for this game yet.</p>
+        {% endfor %}
+
         <footer>
 
             {# Only show delete link if logged in AND owner #}

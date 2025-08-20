@@ -63,3 +63,6 @@ def connect_db():
     finally:
         if client is not None:
             client.close()
+
+
+ 
