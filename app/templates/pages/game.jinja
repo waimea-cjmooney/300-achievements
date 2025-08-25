@@ -26,7 +26,7 @@
 
         {% for achievement in achievements %}
             <p>
-                <strong>{{ achievement.name }}</strong> <a href="">☐</a>
+                <strong>{{ achievement.name }}</strong> <a href="/complete/{{game.id}}">☐</a>
             </p>
         {% else %}
             <p>No achievements registered for this game yet.</p>

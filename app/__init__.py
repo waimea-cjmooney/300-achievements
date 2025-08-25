@@ -102,7 +102,6 @@ def show_game(id):
                    added_by
 
             FROM games
-
             WHERE id=?
         """
         params = [id]
@@ -116,7 +115,6 @@ def show_game(id):
                    added_by
 
             FROM achievements
-
             WHERE game_id=?
         """
         params = [id]
