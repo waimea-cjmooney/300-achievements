@@ -109,15 +109,19 @@ def show_game(id):
         game = result.rows[0]
 
         sql = """
-            SELECT id,
-                   name,
-                   game_id,
-                   added_by
+            SELECT achievements.id,
+                   achievements.name,
+                   achievements.game_id,
+                   achievements.added_by,
+                   earned.username,
+                   earned.date
 
             FROM achievements
-            WHERE game_id=?
+            LEFT JOIN earned ON achievements.id = earned.a_id
+
+            WHERE achievements.game_id=? AND (earned.username=? or earned.username IS NULL)
         """
-        params = [id]
+        params = [id, session["user_username"]]
         result = client.execute(sql, params)
         achievements = result.rows
         return render_template("pages/game.jinja", game=game, achievements=achievements)
@@ -148,6 +152,26 @@ def add_a_thing():
 
         # Go back to the home page
         flash(f"Thing '{name}' added", "success")
+        return redirect("/things")
+
+#-----------------------------------------------------------
+# Route for completing an achievement
+# - Restricted to logged in users
+#-----------------------------------------------------------
+@app.post("/complete/<int:id>")
+@login_required
+def complete(id):
+    # Get the username from the session
+    username = session["username"]
+
+    with connect_db() as client:
+        # Add the thing to the DB
+        sql = "INSERT INTO earned (a_id, username) VALUES (?, ?)"
+        params = [id, username]
+        client.execute(sql, params)
+
+        # Go back to the home page
+        flash(f"Achievement Completed", "success")
         return redirect("/things")
 
 
@@ -256,6 +280,7 @@ def login_user():
             if check_password_hash(hash, password):
                 # Yes, so save info in the session
                 session["user_name"] = user["name"]
+                session["user_username"] = user["username"]
                 session["logged_in"] = True
 
                 # And head back to the home page
