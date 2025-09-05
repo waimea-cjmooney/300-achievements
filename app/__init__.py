@@ -158,22 +158,41 @@ def add_a_thing():
 # Route for completing an achievement
 # - Restricted to logged in users
 #-----------------------------------------------------------
-@app.post("/complete/<int:id>")
+@app.get("/complete/<int:game>/<int:id>")
 @login_required
-def complete(id):
+def complete(game, id):
     # Get the username from the session
-    username = session["username"]
+    username = session["user_username"]
 
     with connect_db() as client:
-        # Add the thing to the DB
+        # Add the achievement to the earned table
         sql = "INSERT INTO earned (a_id, username) VALUES (?, ?)"
         params = [id, username]
         client.execute(sql, params)
 
         # Go back to the home page
         flash(f"Achievement Completed", "success")
-        return redirect("/things")
+        return redirect("/game/" + str(game))
 
+#-----------------------------------------------------------
+# Route for uncompleting an achievement
+# - Restricted to logged in users
+#-----------------------------------------------------------
+@app.get("/uncomplete/<int:game>/<int:id>")
+@login_required
+def uncomplete(game, id):
+    # Get the username from the session
+    username = session["user_username"]
+
+    with connect_db() as client:
+        # Remove the achievement from the earned table
+        sql = "DELETE FROM earned WHERE a_id=? AND username=?"
+        params = [id, username]
+        client.execute(sql, params)
+
+        # Go back to the home page
+        flash(f"Achievement not Completed", "success")
+        return redirect("/game/" + str(game))
 
 #-----------------------------------------------------------
 # Route for deleting a thing, Id given in the route

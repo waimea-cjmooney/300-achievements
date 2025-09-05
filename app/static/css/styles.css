@@ -16,6 +16,17 @@
 }
 
 
+/* ACTION BUTTONS -------------------------------------------- */
+
+.action {
+    background-color: red;
+}
+
+.action.small {
+    padding: 0.1em 0.5em;
+}
+
+
 /* MESSAGES -------------------------------------------- */
 
 #messages ul {

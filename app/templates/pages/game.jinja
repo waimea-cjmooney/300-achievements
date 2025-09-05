@@ -29,9 +29,9 @@
                 <strong>{{ achievement.name }}</strong> 
                 
                 {% if achievement.date %}
-                    <a href="/uncomplete/{{achievement.id}}">🗹</a>
+                    <a href="/uncomplete/{{ game.id }}/{{achievement.id}}">🗹</a>
                 {% else %}
-                    <a href="/complete/{{achievement.id}}">☐</a>
+                    <a href="/complete/{{ game.id }}/{{achievement.id}}">☐</a>
                 {% endif %}
             </p>
         {% else %}
