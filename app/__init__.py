@@ -128,31 +128,44 @@ def show_game(id):
 
 
 #-----------------------------------------------------------
+# Add achievement form route
+#-----------------------------------------------------------
+@app.get("/form/achievement/<int:game>")
+def achievement_form(game):
+    return render_template("pages/form-achievement.jinja", game=game)
+
+#-----------------------------------------------------------
+# Add game form route
+#-----------------------------------------------------------
+@app.get("/form/game/")
+def game_form():
+    return render_template("pages/form-game.jinja")
+
+#-----------------------------------------------------------
 # Route for adding a thing, using data posted from a form
 # - Restricted to logged in users
 #-----------------------------------------------------------
-@app.post("/add")
+@app.post("/add/achievement/<int:id>")
 @login_required
-def add_a_thing():
+def add_an_acheivement(id):
     # Get the data from the form
     name  = request.form.get("name")
-    price = request.form.get("price")
 
     # Sanitise the text inputs
     name = html.escape(name)
 
     # Get the username from the session
-    username = session["username"]
+    username = session["user_username"]
 
     with connect_db() as client:
         # Add the thing to the DB
-        sql = "INSERT INTO things (name, price, username) VALUES (?, ?, ?)"
-        params = [name, price, username]
+        sql = "INSERT INTO achievements (name, game_id, added_by) VALUES (?, ?, ?)"
+        params = [name, id, username]
         client.execute(sql, params)
 
         # Go back to the home page
         flash(f"Thing '{name}' added", "success")
-        return redirect("/things")
+        return redirect("/game/" + str(id))
 
 #-----------------------------------------------------------
 # Route for completing an achievement
@@ -195,30 +208,44 @@ def uncomplete(game, id):
         return redirect("/game/" + str(game))
 
 #-----------------------------------------------------------
-# Route for deleting a thing, Id given in the route
+# Route for deleting a game, Id given in the route
 # - Restricted to logged in users
 #-----------------------------------------------------------
-@app.get("/delete/<int:id>")
+@app.get("/delete/game/<int:id>")
 @login_required
-def delete_a_thing(id):
+def delete_a_game(id):
     # Get the user id from the session
-    username = session["username"]
+    username = session["user_username"]
 
     with connect_db() as client:
         # Delete the thing from the DB only if we own it
-        sql = "DELETE FROM things WHERE id=? AND username=?"
+        sql = "DELETE FROM games WHERE id=? AND username=?"
         params = [id, username]
         client.execute(sql, params)
 
         # Go back to the home page
-        flash("Thing deleted", "success")
-        return redirect("/things")
+        flash("Game deleted", "success")
+        return redirect("/")
+    
+#-----------------------------------------------------------
+# Route for deleting an achievement, Id given in the route
+# - Restricted to logged in users
+#-----------------------------------------------------------    
+@app.get("/delete/achievement/<int:game>/<int:id>")
+@login_required
+def delete_an_achievment(game, id):
+    # Get the user id from the session
+    username = session["user_username"]
 
+    with connect_db() as client:
+        # Delete the thing from the DB only if we own it
+        sql = "DELETE FROM achievements WHERE id=? AND added_by=?"
+        params = [id, username]
+        client.execute(sql, params)
 
-
-
-
-
+        # Go back to the home page
+        flash("Achievement deleted", "success")
+        return redirect("/game/" + str(game))
 
 #-----------------------------------------------------------
 # User registration form route

@@ -1,0 +1,39 @@
+{#=====================================================
+Form achievement page
+  - Form for adding a new achievement to a game
+=====================================================#}
+
+{% extends 'pages/base.jinja' %}
+
+
+{% block title %}
+
+    Platinum Tracker - Login
+
+{% endblock %}
+
+
+{% block content %}
+
+    <article>
+
+        <header>
+            <h2>Add Acheivement</h2>
+        </header>
+
+        <form action="/add/achievement/{{ game }}" method="POST">
+
+            <input
+                type="text"
+                name="name"
+                placeholder="Name of Acheivement"
+                required
+            >
+
+            <button>Add</button>
+
+        </form>
+    </article>
+
+{% endblock %}
+

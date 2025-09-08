@@ -30,8 +30,13 @@
                 
                 {% if achievement.date %}
                     <a href="/uncomplete/{{ game.id }}/{{achievement.id}}">🗹</a>
+                    {{ achievement.date }}
                 {% else %}
                     <a href="/complete/{{ game.id }}/{{achievement.id}}">☐</a>
+                {% endif %}
+
+                {% if session.user_username and (game.added_by == session.user_username) %}
+                    <a href="/delete/achievement/{{ game.id }}/{{ achievement.id }}" onclick="return confirm('Really delete?');">🗑</a>
                 {% endif %}
             </p>
         {% else %}
@@ -41,9 +46,10 @@
         <footer>
 
             {# Only show delete link if logged in AND owner #}
-            {% if session.username and (game.added_by == session.username) %}
+            {% if session.user_username and (game.added_by == session.user_username) %}
 
-                <a role="button" href="/delete/{{ game.id }}" onclick="return confirm('Really delete?');">Delete</a>
+                <a role="button" href="/delete/game/{{ game.id }}" onclick="return confirm('Really delete?');">Delete</a>
+                <a role="button" href="/form/achievement/{{ game.id }}">Add</a>
 
             {% else %}
 
