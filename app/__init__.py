@@ -51,7 +51,7 @@ def index():
             games = result.rows
 
             # And show them on the page
-            return render_template("pages/Games.jinja", games=games)
+            return render_template("pages/game-list.jinja", games=games)
     else:
         return render_template("pages/home.jinja")
 
