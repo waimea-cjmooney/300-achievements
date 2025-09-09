@@ -20,8 +20,11 @@
 
     <article>
 
-        <header>
+        <header id="game-header">
             <h3>{{ game.name }}</h3>
+            {% if game.header_img %}
+                <img src="{{ game.header_img }}" alt="Header image">
+            {% endif %}
         </header>
 
         {% for achievement in achievements %}

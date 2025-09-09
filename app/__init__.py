@@ -99,7 +99,8 @@ def show_game(id):
         sql = """
             SELECT id,
                    name,
-                   added_by
+                   added_by,
+                   header_img
 
             FROM games
             WHERE id=?
