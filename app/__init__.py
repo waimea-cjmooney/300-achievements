@@ -39,7 +39,8 @@ def index():
             sql = """
                 SELECT games.id,
                        games.name,
-                       games.added_by
+                       games.added_by,
+                       games.header_img
 
                 FROM games
 
