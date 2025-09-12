@@ -44,3 +44,14 @@
 #messages .message.success { color: var(--pico-color-green-500); }
 #messages .message.error   { color: var(--pico-color-red-500); }
 
+
+
+
+
+.header-img {
+    width:  530px; 
+    height: 250px; 
+    overflow: hidden;
+    object-fit: cover; /* Crops the image to fill the container */
+    object-position: center center; /* Centers the image within the container */
+}

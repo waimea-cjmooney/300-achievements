@@ -28,7 +28,12 @@
                 <li>
                     <a href="/game/{{ game.id }}">
                         <strong>{{ game.name }}</strong> {{ game.added_by }}
-                        <img src="{{ game.header_img }}" alt="Header image">
+                        
+                        {% if game.header_img %}
+                            <img src="{{ game.header_img }}" alt="Header image" class="header-img">
+                        {% else %}
+                            <img src="/static/images/missing.png" alt="Missing header" class="header-img">
+                        {% endif %}
                     </a>
                 </li>
 

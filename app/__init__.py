@@ -35,7 +35,7 @@ init_datetime(app)  # Handle UTC dates in timestamps
 def index():
     if session.get("logged_in"):
         with connect_db() as client:
-            # Get all the things from the DB
+            # Get the 10 most recently added games from the DB
             sql = """
                 SELECT games.id,
                        games.name,
@@ -44,7 +44,7 @@ def index():
 
                 FROM games
 
-                ORDER BY games.id ASC
+                ORDER BY games.id DESC
                 LIMIT 10
                 """
             params=[]
@@ -166,7 +166,41 @@ def add_an_acheivement(id):
         client.execute(sql, params)
 
         # Go back to the home page
-        flash(f"Thing '{name}' added", "success")
+        flash(f"Acheivement '{name}' added", "success")
+        return redirect("/game/" + str(id))
+    
+#-----------------------------------------------------------
+# Route for adding a thing, using data posted from a form
+# - Restricted to logged in users
+#-----------------------------------------------------------
+@app.post("/add/game/")
+@login_required
+def add_a_game():
+    # Get the data from the form
+    name  = request.form.get("name")
+    image = request.form.get("image")
+    print(image)
+
+    # Sanitise the text inputs
+    name = html.escape(name)
+    image = html.escape(image)
+
+    # Get the username from the session
+    username = session["user_username"]
+
+    with connect_db() as client:
+        # Add the thing to the DB
+        sql = "INSERT INTO games (name, added_by, header_img) VALUES (?, ?, ?)"
+        params = [name, username, image]
+        client.execute(sql, params)
+
+        # Get the id of the game we just added
+        sql = "SELECT Max(id) FROM games"
+        params = []
+        id = client.execute(sql, params).rows[0][0]
+
+        # Go back to the home page
+        flash(f"Game '{name}' added", "success")
         return redirect("/game/" + str(id))
 
 #-----------------------------------------------------------
@@ -221,7 +255,7 @@ def delete_a_game(id):
 
     with connect_db() as client:
         # Delete the thing from the DB only if we own it
-        sql = "DELETE FROM games WHERE id=? AND username=?"
+        sql = "DELETE FROM games WHERE id=? AND added_by=?"
         params = [id, username]
         client.execute(sql, params)
 

@@ -8,7 +8,7 @@ Form achievement page
 
 {% block title %}
 
-    Platinum Tracker - Login
+    Platinum Tracker - Add Game
 
 {% endblock %}
 
@@ -21,13 +21,22 @@ Form achievement page
             <h2>Add Game</h2>
         </header>
 
-        <form action="/add/achievement/{{ game }}" method="POST">
+        <form action="/add/game/" method="POST">
+
+            <label for="name">Name of the Game</label>
 
             <input
                 type="text"
                 name="name"
-                placeholder="Name of Acheivement"
                 required
+            >
+
+            <label for="image">Link to header image</label>
+
+            <input
+                type="link"
+                name="image"
+                placeholder="https://..."
             >
 
             <button>Add</button>

@@ -39,7 +39,7 @@
                 {% endif %}
 
                 {% if session.user_username and (game.added_by == session.user_username) %}
-                    <a href="/delete/achievement/{{ game.id }}/{{ achievement.id }}" onclick="return confirm('Really delete?');">🗑</a>
+                    <a href="/delete/achievement/{{ game.id }}/{{ achievement.id }}" onclick="return confirm('Delete achievement? This can NOT be undone.');">🗑</a>
                 {% endif %}
             </p>
         {% else %}
@@ -51,7 +51,7 @@
             {# Only show delete link if logged in AND owner #}
             {% if session.user_username and (game.added_by == session.user_username) %}
 
-                <a role="button" href="/delete/game/{{ game.id }}" onclick="return confirm('Really delete?');">Delete</a>
+                <a role="button" href="/delete/game/{{ game.id }}" onclick="return confirm('Delete game? This action is permanent and can NOT be undone.');">Delete</a>
                 <a role="button" href="/form/achievement/{{ game.id }}">Add</a>
 
             {% else %}
