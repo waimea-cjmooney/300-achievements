@@ -152,17 +152,21 @@ def game_form():
 def add_an_acheivement(id):
     # Get the data from the form
     name  = request.form.get("name")
+    desc  = request.form.get("desc")
+    image = request.form.get("image")
 
     # Sanitise the text inputs
-    name = html.escape(name)
+    name  = html.escape(name)
+    desc  = html.escape(desc)
+    image = html.escape(image)
 
     # Get the username from the session
     username = session["user_username"]
 
     with connect_db() as client:
         # Add the thing to the DB
-        sql = "INSERT INTO achievements (name, game_id, added_by) VALUES (?, ?, ?)"
-        params = [name, id, username]
+        sql = "INSERT INTO achievements (name, description, icon_img, game_id, added_by) VALUES (?, ?, ?, ?, ?)"
+        params = [name, desc, image, id, username]
         client.execute(sql, params)
 
         # Go back to the home page
