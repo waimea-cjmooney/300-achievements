@@ -183,7 +183,6 @@ def add_a_game():
     # Get the data from the form
     name  = request.form.get("name")
     image = request.form.get("image")
-    print(image)
 
     # Sanitise the text inputs
     name = html.escape(name)
