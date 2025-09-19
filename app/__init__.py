@@ -115,6 +115,7 @@ def show_game(id):
                    achievements.name,
                    achievements.game_id,
                    achievements.added_by,
+                   achievements.icon_img,
                    earned.username,
                    earned.date
 
@@ -152,13 +153,13 @@ def game_form():
 def add_an_acheivement(id):
     # Get the data from the form
     name  = request.form.get("name")
-    desc  = request.form.get("desc")
+    desc  = request.form.get("description")
     image = request.form.get("image")
 
     # Sanitise the text inputs
-    name  = html.escape(name)
-    desc  = html.escape(desc)
-    image = html.escape(image)
+    name  = html.escape(name)  if name else None
+    desc  = html.escape(desc)  if desc else None
+    image = html.escape(image) if image else None
 
     # Get the username from the session
     username = session["user_username"]
@@ -185,7 +186,7 @@ def add_a_game():
     image = request.form.get("image")
 
     # Sanitise the text inputs
-    name = html.escape(name)
+    name  = html.escape(name)
     image = html.escape(image)
 
     # Get the username from the session

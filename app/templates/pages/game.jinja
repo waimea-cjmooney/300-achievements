@@ -29,6 +29,9 @@
 
         {% for achievement in achievements %}
             <p>
+                {% if achievement.icon_img %}
+                    <img src="{{ achievement.icon_img }}" alt="Achievement icon" style="width: 2rem;">
+                {% endif %}
                 <strong>{{ achievement.name }}</strong> 
                 
                 {% if achievement.date %}
