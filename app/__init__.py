@@ -91,6 +91,33 @@ def show_all_things():
 
 
 #-----------------------------------------------------------
+# Things page route - Show all the things, and new thing form
+#-----------------------------------------------------------
+@app.post("/search-games/")
+def search_things():
+    with connect_db() as client:
+        # Get the search term from the form
+        search = request.form.get("search")
+        
+        # Get all the things from the DB
+        sql = """
+            SELECT  id,
+                    name,
+                    added_by,
+                    header_img
+
+            FROM games
+            WHERE games.name LIKE '%' || ? || '%'
+            LIMIT 20
+            """
+        params=[search]
+        result = client.execute(sql, params)
+        games = result.rows
+
+        # And show them on the page
+        return render_template("pages/search-list.jinja", games=games, search=search)
+
+#-----------------------------------------------------------
 # Thing page route - Show details of a single thing
 #-----------------------------------------------------------
 @app.get("/game/<int:id>")

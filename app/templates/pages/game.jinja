@@ -29,11 +29,10 @@
 
         {% for achievement in achievements %}
             <p>
-                {% if achievement.icon_img %}
-                    <img src="{{ achievement.icon_img }}" alt="Achievement icon" style="width: 2rem;">
+                {% if session.user_username and (game.added_by == session.user_username) %}
+                    <a href="/delete/achievement/{{ game.id }}/{{ achievement.id }}" onclick="return confirm('Delete achievement? This can NOT be undone.');">🗑</a>
                 {% endif %}
-                <strong>{{ achievement.name }}</strong> 
-                
+
                 {% if achievement.date %}
                     <a href="/uncomplete/{{ game.id }}/{{achievement.id}}">🗹</a>
                     {{ achievement.date }}
@@ -41,9 +40,10 @@
                     <a href="/complete/{{ game.id }}/{{achievement.id}}">☐</a>
                 {% endif %}
 
-                {% if session.user_username and (game.added_by == session.user_username) %}
-                    <a href="/delete/achievement/{{ game.id }}/{{ achievement.id }}" onclick="return confirm('Delete achievement? This can NOT be undone.');">🗑</a>
+                {% if achievement.icon_img %}
+                    <img src="{{ achievement.icon_img }}" alt="Achievement icon" style="width: 2rem;">
                 {% endif %}
+                <strong>{{ achievement.name }}</strong> 
             </p>
         {% else %}
             <p>No achievements registered for this game yet.</p>
