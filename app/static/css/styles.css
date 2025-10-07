@@ -55,3 +55,9 @@
     object-fit: cover; /* Crops the image to fill the container */
     object-position: center center; /* Centers the image within the container */
 }
+
+#ach-desc {
+    font-size: 0.7rem;
+    margin-top: 0.5rem;
+    margin-bottom: 1.5rem;
+}

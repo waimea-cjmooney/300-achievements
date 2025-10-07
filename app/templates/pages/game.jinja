@@ -28,14 +28,13 @@
         </header>
 
         {% for achievement in achievements %}
-            <p>
+            <p id="ach{{ achievement.id }}">
                 {% if session.user_username and (game.added_by == session.user_username) %}
                     <a href="/delete/achievement/{{ game.id }}/{{ achievement.id }}" onclick="return confirm('Delete achievement? This can NOT be undone.');">🗑</a>
                 {% endif %}
 
                 {% if achievement.date %}
                     <a href="/uncomplete/{{ game.id }}/{{achievement.id}}">🗹</a>
-                    {{ achievement.date }}
                 {% else %}
                     <a href="/complete/{{ game.id }}/{{achievement.id}}">☐</a>
                 {% endif %}
@@ -43,8 +42,23 @@
                 {% if achievement.icon_img %}
                     <img src="{{ achievement.icon_img }}" alt="Achievement icon" style="width: 2rem;">
                 {% endif %}
-                <strong>{{ achievement.name }}</strong> 
+
+                {% if achievement.date %}
+                    {{ achievement.date }}
+                {% endif %}
+
+                <article>
+                    <strong>{{ achievement.name }}</strong> 
+                    <p id="ach-desc">{{ achievement.description }}</p>
+                </article>
             </p>
+            {% if scroll %}
+                <script>
+                    document.getElementById('{{ scroll }}').scrollIntoView();
+                    // or
+                    document.location.hash = '#' + '{{ scroll }}';
+                </script>
+            {% endif %}
         {% else %}
             <p>No achievements registered for this game yet.</p>
         {% endfor %}

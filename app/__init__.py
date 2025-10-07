@@ -140,6 +140,7 @@ def show_game(id):
         sql = """
             SELECT achievements.id,
                    achievements.name,
+                   achievements.description,
                    achievements.game_id,
                    achievements.added_by,
                    achievements.icon_img,
