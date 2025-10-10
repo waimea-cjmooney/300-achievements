@@ -51,6 +51,7 @@
 .header-img {
     width:  530px; 
     height: 250px; 
+    border-radius: 10px;
     overflow: hidden;
     object-fit: cover; /* Crops the image to fill the container */
     object-position: center center; /* Centers the image within the container */
