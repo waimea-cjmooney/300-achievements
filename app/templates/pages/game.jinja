@@ -40,7 +40,7 @@
                 {% endif %}
 
                 {% if achievement.icon_img %}
-                    <img src="{{ achievement.icon_img }}" alt="Achievement icon" style="width: 2rem;">
+                    <img src="{{ achievement.icon_img }}" alt="Achievement icon" id="achievement-icon">
                 {% endif %}
 
                 {% if achievement.date %}
@@ -52,13 +52,6 @@
                     <p id="ach-desc">{{ achievement.description }}</p>
                 </article>
             </p>
-            {% if scroll %}
-                <script>
-                    document.getElementById('{{ scroll }}').scrollIntoView();
-                    // or
-                    document.location.hash = '#' + '{{ scroll }}';
-                </script>
-            {% endif %}
         {% else %}
             <p>No achievements registered for this game yet.</p>
         {% endfor %}
@@ -81,6 +74,12 @@
 
     </article>
 
+    {% if scroll %}
+        <script>
+            const el = document.getElementById('ach{{ scroll }}');
+            if (el) el.scrollIntoView();
+        </script>
+    {% endif %}
 
 {% endblock %}
 

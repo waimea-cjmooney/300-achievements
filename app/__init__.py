@@ -91,7 +91,7 @@ def show_all_things():
 
 
 #-----------------------------------------------------------
-# Things page route - Show all the things, and new thing form
+# Search page route - Show all the results matching the search term
 #-----------------------------------------------------------
 @app.post("/search-games/")
 def search_things():
@@ -120,8 +120,9 @@ def search_things():
 #-----------------------------------------------------------
 # Thing page route - Show details of a single thing
 #-----------------------------------------------------------
-@app.get("/game/<int:id>")
-def show_game(id):
+@app.get("/game/<int:id>")  
+@app.get("/game/<int:id>/<int:scroll>")
+def show_game(id, scroll=None):
     with connect_db() as client:
         # Get the thing details from the DB, including the owner info
         sql = """
@@ -155,7 +156,7 @@ def show_game(id):
         params = [id, session["user_username"]]
         result = client.execute(sql, params)
         achievements = result.rows
-        return render_template("pages/game.jinja", game=game, achievements=achievements)
+        return render_template("pages/game.jinja", game=game, achievements=achievements, scroll=scroll)
 
 
 #-----------------------------------------------------------
@@ -198,9 +199,14 @@ def add_an_acheivement(id):
         params = [name, desc, image, id, username]
         client.execute(sql, params)
 
-        # Go back to the home page
+        # Get the id of the game we just added
+        sql = "SELECT Max(id) FROM achievements"
+        params = []
+        aid = client.execute(sql, params).rows[0][0]
+
+        # Go back to the game page
         flash(f"Acheivement '{name}' added", "success")
-        return redirect("/game/" + str(id))
+        return redirect("/game/" + str(id) + "/" +str(aid))
     
 #-----------------------------------------------------------
 # Route for adding a thing, using data posted from a form
@@ -253,7 +259,7 @@ def complete(game, id):
 
         # Go back to the home page
         flash(f"Achievement Completed", "success")
-        return redirect("/game/" + str(game))
+        return redirect("/game/" + str(game) + "/" + str(id))
 
 #-----------------------------------------------------------
 # Route for uncompleting an achievement
@@ -273,7 +279,7 @@ def uncomplete(game, id):
 
         # Go back to the home page
         flash(f"Achievement not Completed", "success")
-        return redirect("/game/" + str(game))
+        return redirect("/game/" + str(game) + "/" + str(id))
 
 #-----------------------------------------------------------
 # Route for deleting a game, Id given in the route
