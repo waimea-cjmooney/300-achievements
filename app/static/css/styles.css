@@ -61,3 +61,10 @@
     margin-top: 0.5rem;
     margin-bottom: 1.5rem;
 }
+
+#achievement-icon {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 0.5rem;
+}
+
