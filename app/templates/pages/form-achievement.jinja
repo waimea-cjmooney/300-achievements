@@ -32,14 +32,27 @@ Form achievement page
             >
 
 
-            <label for="description">Description</label>
+            <label for="description">Description of the achievement</label>
+
+            <textarea
+                name="description"
+                required
+            ></textarea>
+
+            <label for="requirements">Requirement/s <strong>*optional*</strong></label>
+
+            <textarea
+                name="requirements"
+                placeholder="How to unlock this achievement (If not obvious)"
+            ></textarea>
+
+            <label for="location">Location/s <strong>*optional*</strong></label>
 
             <input
                 type="text"
-                name="description"
-                required
+                name="location"
+                placeholder=" Where to unlock achievement. (Level, chapter, town, area, etc...)"
             >
-
 
             <label for="image">Link to icon <strong>*optional*</strong></label>
 

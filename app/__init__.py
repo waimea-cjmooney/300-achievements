@@ -129,6 +129,8 @@ def show_game(id, scroll=None):
             SELECT id,
                    name,
                    added_by,
+                   description,
+                   publishers,
                    header_img
 
             FROM games
@@ -142,6 +144,8 @@ def show_game(id, scroll=None):
             SELECT achievements.id,
                    achievements.name,
                    achievements.description,
+                   achievements.location,
+                   achievements.requirements,
                    achievements.game_id,
                    achievements.added_by,
                    achievements.icon_img,
@@ -183,11 +187,15 @@ def add_an_acheivement(id):
     # Get the data from the form
     name  = request.form.get("name")
     desc  = request.form.get("description")
+    loca  = request.form.get("location")
+    requ  = request.form.get("requirements")
     image = request.form.get("image")
 
     # Sanitise the text inputs
-    name  = html.escape(name)  if name else None
-    desc  = html.escape(desc)  if desc else None
+    name  = html.escape(name)  if name  else None
+    desc  = html.escape(desc)  if desc  else None
+    loca  = html.escape(loca)  if loca  else None
+    requ  = html.escape(requ)  if requ  else None
     image = html.escape(image) if image else None
 
     # Get the username from the session
@@ -195,16 +203,16 @@ def add_an_acheivement(id):
 
     with connect_db() as client:
         # Add the thing to the DB
-        sql = "INSERT INTO achievements (name, description, icon_img, game_id, added_by) VALUES (?, ?, ?, ?, ?)"
-        params = [name, desc, image, id, username]
+        sql = "INSERT INTO achievements (name, description, location, requirements icon_img, game_id, added_by) VALUES (?, ?, ?, ?, ?, ?, ?)"
+        params = [name, desc, loca, requ, image, id, username]
         client.execute(sql, params)
 
-        # Get the id of the game we just added
+        # Get the id of the achievement we just added
         sql = "SELECT Max(id) FROM achievements"
         params = []
         aid = client.execute(sql, params).rows[0][0]
 
-        # Go back to the game page
+        # Go back to the game page and scroll to the new achievement
         flash(f"Acheivement '{name}' added", "success")
         return redirect("/game/" + str(id) + "/" +str(aid))
     
@@ -217,19 +225,23 @@ def add_an_acheivement(id):
 def add_a_game():
     # Get the data from the form
     name  = request.form.get("name")
+    desc  = request.form.get("desc")
+    publs = request.form.get("publishers")
     image = request.form.get("image")
 
     # Sanitise the text inputs
     name  = html.escape(name)
+    desc  = html.escape(desc)
+    publs = html.escape(publs)
     image = html.escape(image)
 
     # Get the username from the session
     username = session["user_username"]
 
     with connect_db() as client:
-        # Add the thing to the DB
-        sql = "INSERT INTO games (name, added_by, header_img) VALUES (?, ?, ?)"
-        params = [name, username, image]
+        # Add the game to the DB
+        sql = "INSERT INTO games (name, publishers, description, added_by, header_img) VALUES (?, ?, ?, ?, ?)"
+        params = [name, publs, desc, username, image]
         client.execute(sql, params)
 
         # Get the id of the game we just added
@@ -237,7 +249,7 @@ def add_a_game():
         params = []
         id = client.execute(sql, params).rows[0][0]
 
-        # Go back to the home page
+        # Go to the game page
         flash(f"Game '{name}' added", "success")
         return redirect("/game/" + str(id))
 

@@ -45,16 +45,76 @@
 #messages .message.error   { color: var(--pico-color-red-500); }
 
 
+/* GAME PAGE -------------------------------------------- */
 
+html {
+  scroll-behavior: smooth;
+}
 
+textarea {
+    min-height: 5rem;
+    resize: none;
+    field-sizing: content;
+}
 
-.header-img {
-    width:  530px; 
-    height: 250px; 
+#game-article {
+    padding: 2rem;
+}
+
+#game-header {
+    padding: 2rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    border-radius: 10px;
+}
+
+#game-text {
+    max-width: 55%;
+}
+
+#game-right {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    float: right;
+    align-items: flex-end;
+    gap: 1rem;
+}
+
+#header-img {
+    width: 75%;
+    height: 75%;
+    min-width: 60%;
+    min-height: 60%;
     border-radius: 10px;
     overflow: hidden;
     object-fit: cover; /* Crops the image to fill the container */
     object-position: center center; /* Centers the image within the container */
+}
+
+progress {
+    width: 50%;
+    height: 15px;
+    border-radius: 15px;
+    align-self: flex-end;
+}
+
+#game-progress {
+    display: flex;
+    width: 80%;
+    gap: 1rem;
+    justify-content: flex-end;
+}
+
+#achievement-controls {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+#achievement-controls, :link {
+    text-decoration: none;
 }
 
 #ach-desc {
@@ -64,8 +124,58 @@
 }
 
 #achievement-icon {
-    width: 3rem;
-    height: 3rem;
-    border-radius: 0.5rem;
+    width: 4rem;
+    height: 4rem;
+    border-radius: 20px;
+    padding: 0.5rem;
 }
 
+
+
+
+/* Responsive design for smaller screens */
+@media all and (max-width: 1300px) {
+
+#game-article {
+    max-width: 800px;
+    align-items: center;
+}
+
+#game-header {
+    padding: 2rem;
+    display: flex;
+    flex-direction: column-reverse;
+    border-radius: 10px;
+    align-items: center;
+}
+
+#game-text {
+    width: 80%;
+    max-width: 80%;
+    text-align: center;
+    object-position: center center;
+}
+
+#header-img {
+    width: 70%;
+    height: 70%;
+    border-radius: 10px;
+    overflow: hidden;
+    object-fit: cover; /* Crops the image to fill the container */
+    object-position: center center; /* Centers the image within the container */
+}
+
+progress {
+    width: 100%;
+}
+
+#game-right {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+
+}
