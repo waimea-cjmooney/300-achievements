@@ -26,7 +26,7 @@
             {% for game in games %}
 
                 <li>
-                    <a href="/game/{{ game.id }}" id="home-game">
+                    <a href="/game/{{ game.id }}" class="home-game">
                         <div class="home-game-text">
                             <h3>{{ game.name }}</h3> 
                             <strong>{{ game.publishers }}</strong> 
@@ -34,9 +34,9 @@
                         </div>
 
                         {% if game.header_img %}
-                            <img src="{{ game.header_img }}" alt="Header image" class="header-img" id="home-game-header">
+                            <img src="{{ game.header_img }}" alt="Header image"  class="home-game-image">
                         {% else %}
-                            <img src="/static/images/missing.png" alt="Missing header" class="header-img" id="home-game-header">
+                            <img src="/static/images/missing.png" alt="Missing header" class="home-game-image">
                         {% endif %}
                     </a>
                 </li>

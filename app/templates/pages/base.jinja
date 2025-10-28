@@ -41,15 +41,15 @@
                 {% if session.user_name %}
 
                     <li>Hello, {{ session.user_name }}</li>
+                    <li>
+                        <form action="/search-games/" method="POST">
+                            <input type="text" name="search" placeholder="Search">
+                        </form>
+                    </li>
 
                 {% endif %}
 
-                <li>
-                    <form action="/search-games/" method="POST">
-                        <input type="text" name="search" placeholder="Search">
-                    </form>
-                </li>
-
+                
                 <li><a href="/">Home</a></li>
                 <li><a href="/about">About</a></li>
 
