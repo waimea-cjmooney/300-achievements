@@ -120,7 +120,7 @@ def search_things():
         return render_template("pages/search-list.jinja", games=games, search=search)
 
 #-----------------------------------------------------------
-# Thing page route - Show details of a single thing
+# Game page route - Show details of a single game
 #-----------------------------------------------------------
 @app.get("/game/<int:id>")  
 @app.get("/game/<int:id>/<int:scroll>")
@@ -433,6 +433,7 @@ def login_user():
 def logout():
     # Clear the details from the session
     session.pop("user_name", None)
+    session.pop("user_username", None)
     session.pop("logged_in", None)
 
     # And head back to the home page
