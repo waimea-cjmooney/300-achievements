@@ -1,6 +1,6 @@
 # Platinum Tracker
 
-by YOUR NAME HERE
+by Corban Mooney
 
 
 ---

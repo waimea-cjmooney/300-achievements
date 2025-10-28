@@ -20,19 +20,23 @@
 
     <a role="button" href="/form/game/">Add Game</a>
 
-    <article>
+    <article id ="game-list">
 
         <ul>
             {% for game in games %}
 
                 <li>
-                    <a href="/game/{{ game.id }}">
-                        <strong>{{ game.name }}</strong> {{ game.added_by }}
-                        
+                    <a href="/game/{{ game.id }}" id="home-game">
+                        <div class="home-game-text">
+                            <h3>{{ game.name }}</h3> 
+                            <strong>{{ game.publishers }}</strong> 
+                            <p>{{ game.added_by }}</p>
+                        </div>
+
                         {% if game.header_img %}
-                            <img src="{{ game.header_img }}" alt="Header image" class="header-img">
+                            <img src="{{ game.header_img }}" alt="Header image" class="header-img" id="home-game-header">
                         {% else %}
-                            <img src="/static/images/missing.png" alt="Missing header" class="header-img">
+                            <img src="/static/images/missing.png" alt="Missing header" class="header-img" id="home-game-header">
                         {% endif %}
                     </a>
                 </li>

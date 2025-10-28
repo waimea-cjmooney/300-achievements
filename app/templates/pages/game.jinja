@@ -30,6 +30,8 @@
             <span id="game-right">
                 {% if game.header_img %}
                     <img src="{{ game.header_img }}" alt="Header image" id="header-img">
+                {% else %}
+                    <img src="/static/images/missing.png" alt="No header image available" id="header-img">
                 {% endif %}
 
                 {# Achievement progress bar and percentage #}
@@ -47,53 +49,60 @@
                         {{ ((achievements | rejectattr("date", "equalto", none) | list | count) / (achievements | length if achievements | length > 0 else 1) * 100) | round(0, 'common') | int if achievements | length > 0 else 0 }}%
                     </strong>
                 </span>
+
+                {# Only show delete link if logged in AND owner #}
+                {% if session.user_username and (game.added_by == session.user_username) %}
+                    <a role="button" href="/delete/game/{{ game.id }}" onclick="return confirm('Delete game? This action is permanent and can NOT be undone.');">Delete</a>
+                {% endif %}
             </span>
         </header>
 
         <span id="achievements">
             {% for achievement in achievements %}
-                <p id="ach{{ achievement.id }}">
-                    <span id="achievement-controls">
-                        {% if session.user_username and (game.added_by == session.user_username) %}
-                            <a href="/delete/achievement/{{ game.id }}/{{ achievement.id }}" onclick="return confirm('Delete achievement? This can NOT be undone.');">🗑</a>
-                        {% endif %}
+                <span id="ach{{ achievement.id }}"></span>
+                <span id="achievement">
+                    {% if achievement.date %}
+                        <a href="/uncomplete/{{ game.id }}/{{achievement.id}}">🗹</a>
+                    {% else %}
+                        <a href="/complete/{{ game.id }}/{{achievement.id}}">☐</a>
+                    {% endif %}
 
-                        {% if achievement.date %}
-                            <a href="/uncomplete/{{ game.id }}/{{achievement.id}}">🗹</a>
-                        {% else %}
-                            <a href="/complete/{{ game.id }}/{{achievement.id}}">☐</a>
-                        {% endif %}
-
+                    <span id="achievement-content">
                         {% if achievement.icon_img %}
                             <img src="{{ achievement.icon_img }}" alt="Achievement icon" id="achievement-icon">
                         {% endif %}
 
-                        {% if achievement.date %}
-                            <strong>{{ achievement.date }}</strong>
-                        {% endif %}
-                    </span>
+                        <span id="ach-title">
+                            <strong>{{ achievement.name }}</strong> 
+                            
+                            <span id="ach-desc">
+                                {% if achievement.date %}<p>{{ achievement.date }}</p>{% endif %}
+                                <p>{{ achievement.description }}</p>
 
-                    <article>
-                        <strong>{{ achievement.name }}</strong> 
-                        <p id="ach-desc">{{ achievement.description }}</p>
-                        {% if achievement.location %}
-                            <p><em>Location: {{ achievement.location }}</em></p>
+                                {% if achievement.location %}
+                                    <p>Location: {{ achievement.location }}</p>
+                                {% endif %}
+                                {% if achievement.requirements %}
+                                    <p>Requirements: {{ achievement.requirements }}</p>
+                                {% endif %}
+                            </span>
+                        </span>
+
+                        {% if session.user_username and (game.added_by == session.user_username) %}
+                            <a href="/delete/achievement/{{ game.id }}/{{ achievement.id }}" onclick="return confirm('Delete achievement? This can NOT be undone.');">🗑</a>
                         {% endif %}
-                        {% if achievement.requirements %}
-                            <p><em>Requirements: {{ achievement.requirements }}</em></p>
-                        {% endif %}
-                    </article>
-                </p>
+
+                    </span>
+                </span>
             {% else %}
                 <p>No achievements registered for this game yet.</p>
             {% endfor %}
 
             <footer>
 
-                {# Only show delete link if logged in AND owner #}
+                {# Only show add button if logged in AND owner #}
                 {% if session.user_username and (game.added_by == session.user_username) %}
 
-                    <a role="button" href="/delete/game/{{ game.id }}" onclick="return confirm('Delete game? This action is permanent and can NOT be undone.');">Delete</a>
                     <a role="button" href="/form/achievement/{{ game.id }}">Add</a>
 
                 {% else %}
@@ -109,7 +118,7 @@
     {% if scroll %}
         <script>
             const el = document.getElementById('ach{{ scroll }}');
-            if (el) el.scrollIntoView();
+            if (el) el.scrollIntoView({block: 'center'});
         </script>
     {% endif %}
 

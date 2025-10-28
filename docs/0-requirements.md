@@ -2,7 +2,7 @@
 
 ## Identified Problem or Need
 
-Replace this text with a clearly stated problem or need that exists that your project will attempt to solve / fulfil.
+Achievements are not very self explanitory. If someone is looking to "100%" their favorite games, the built in
 
 
 ## End-User Requirements

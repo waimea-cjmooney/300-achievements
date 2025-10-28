@@ -40,7 +40,8 @@ def index():
                 SELECT games.id,
                        games.name,
                        games.added_by,
-                       games.header_img
+                       games.header_img,
+                       games.publishers
 
                 FROM games
 
@@ -104,7 +105,8 @@ def search_things():
             SELECT  id,
                     name,
                     added_by,
-                    header_img
+                    header_img,
+                    publishers
 
             FROM games
             WHERE games.name LIKE '%' || ? || '%'
@@ -203,7 +205,7 @@ def add_an_acheivement(id):
 
     with connect_db() as client:
         # Add the thing to the DB
-        sql = "INSERT INTO achievements (name, description, location, requirements icon_img, game_id, added_by) VALUES (?, ?, ?, ?, ?, ?, ?)"
+        sql = "INSERT INTO achievements (name, description, location, requirements, icon_img, game_id, added_by) VALUES (?, ?, ?, ?, ?, ?, ?)"
         params = [name, desc, loca, requ, image, id, username]
         client.execute(sql, params)
 
